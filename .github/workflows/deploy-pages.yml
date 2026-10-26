@@ -39,7 +39,7 @@ jobs:
 
       - name: Build website
         run: |
-          export VITE_BASE_PATH="/bydesign/"
+          export VITE_BASE_PATH="/"
           pnpm run build
 
       - name: Configure GitHub Pages
