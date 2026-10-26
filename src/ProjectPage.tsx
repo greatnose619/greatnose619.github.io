@@ -15,9 +15,9 @@ const moreProjects = [
 
 export default function ProjectPage() {
   useEffect(() => {
-    document.title = "Brandify — Nate Yeh"
+    document.title = "Brandify — Nate's Design"
     window.scrollTo(0, 0)
-    return () => { document.title = "Nate Yeh — Product Designer" }
+    return () => { document.title = "Nate's Design" }
   }, [])
 
   return <main className="project-page">
