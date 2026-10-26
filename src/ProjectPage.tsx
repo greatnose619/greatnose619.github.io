@@ -7,10 +7,10 @@ function Arrow({ back = false }: { back?: boolean }) {
 }
 
 const moreProjects = [
-  { title: "Personal Finance Tracker", type: "Fintech Product", image: "project-2.png" },
-  { title: "Collaborative Coding Environment", type: "Developer Tools", image: "project-3.png" },
-  { title: "Design System Library", type: "Product Design", image: "project-1.png" },
-  { title: "AI Workspace", type: "SaaS Platform", image: "project-3.png" },
+  { title: "AppFlowy Design Guideline", year: "2025", image: "project-2.png" },
+  { title: "AppFlowy.IO", year: "2025", image: "project-3.png" },
+  { title: "Synology Account 6.0", year: "2023", image: "project-1.png" },
+  { title: "Synology WorkPlus", year: "2020", image: "project-2.png" },
 ]
 
 export default function ProjectPage() {
@@ -22,11 +22,11 @@ export default function ProjectPage() {
 
   return <main className="project-page">
     <nav className="top-nav project-nav" aria-label="Page navigation">
-      <a href="#/">Intro</a>
-      <a href="#/">About</a>
-      <a href="#/">Work</a>
-      <a href="#/">Experience</a>
-      <a href="#/">Education</a>
+      <a href="#/?section=intro">Intro</a>
+      <a href="#/?section=about">About</a>
+      <a href="#/?section=work">Work</a>
+      <a href="#/?section=experience">Experience</a>
+      <a href="#/?section=education">Education</a>
     </nav>
 
     <article className="project-detail-shell">
@@ -63,7 +63,7 @@ export default function ProjectPage() {
         <div className="more-project-grid">
           {moreProjects.map((project) => <a href="#/" className="more-project-card" key={project.title}>
             <img src={asset(project.image)} alt="" />
-            <span><strong>{project.title}</strong><small>{project.type}</small></span>
+            <span><strong>{project.title}</strong><small>{project.year}</small></span>
             <Arrow />
           </a>)}
         </div>

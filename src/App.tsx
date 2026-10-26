@@ -1,4 +1,5 @@
-import type { ReactNode } from "react"
+import { useEffect, type ReactNode } from "react"
+import { useLocation } from "react-router"
 
 const asset = (name: string) => `${import.meta.env.BASE_URL}assets/${name}`
 
@@ -16,38 +17,38 @@ function SectionTitle({ children, action }: { children: ReactNode; action?: Reac
 
 const projects = [
   {
-    title: "Interactive Data Dashboard",
-    type: "Internal Tools",
+    title: "AppFlowy Official Website",
+    year: "2026",
     image: "project-1.png",
     href: "#/work/brandify",
   },
   {
-    title: "Personal Finance Tracker",
-    type: "Fintech Product",
+    title: "AppFlowy Design Guideline",
+    year: "2025",
     image: "project-2.png",
-    href: "https://www.figma.com/",
+    href: "#",
   },
   {
-    title: "Collaborative Coding Environment",
-    type: "Developer Tools",
+    title: "AppFlowy.IO",
+    year: "2025",
     image: "project-3.png",
     href: "#",
   },
   {
-    title: "Design System Library",
-    type: "Product Design",
+    title: "Synology Account 6.0",
+    year: "2023",
     image: "project-1.png",
     href: "#",
   },
   {
-    title: "Mobile Banking Experience",
-    type: "Mobile Product",
+    title: "Synology WorkPlus",
+    year: "2020",
     image: "project-2.png",
     href: "#",
   },
   {
-    title: "AI Workspace",
-    type: "SaaS Platform",
+    title: "DUCTECH Brand Identity",
+    year: "2018",
     image: "project-3.png",
     href: "#",
   },
@@ -55,47 +56,51 @@ const projects = [
 
 const experience = [
   {
-    place: "Cupertino, CA",
-    company: "Alpha",
-    period: "Jan 2024 – Present",
-    role: "Frontend Engineer",
-    points: [
-      "Spearheaded the development of progressive web applications using React, Swift and GraphQL.",
-      "Built reusable interface systems that improved consistency across product teams.",
-      "Collaborated with designers and engineers to ship accessible, responsive experiences.",
-    ],
+    place: "Singapore",
+    company: "AppFlowy.IO",
+    period: "2025.02 – Present",
+    role: "Principal Product Designer",
+    description: "Led UI/UX design and development for the Notion-alternative productivity platform, built clear and consistent design guidelines based on brand identity. Leveraged user feedback to create innovative, customizable solutions that enhanced overall user experience.",
   },
   {
-    place: "New York, NY",
-    company: "Sigma",
-    period: "Sep 2022 – Dec 2023",
-    role: "Frontend Engineer",
-    points: [
-      "Enhanced user interfaces for the Sigma Web Player using React and Redux.",
-      "Improved product performance and helped achieve a 25% increase in user engagement.",
-      "Translated complex product requirements into simple, maintainable interactions.",
-    ],
+    place: "Taiwan",
+    company: "Synology",
+    period: "2019.09 – 2024.11",
+    role: "Senior UI Designer",
+    description: "Served as design lead in the product department, improved product consistency and helped the team grow in developing various products. Managed design work across departments, led major UI/UX redesigns, and improved quality and creativity in the design process.",
   },
   {
-    place: "Menlo Park, CA",
-    company: "Omega",
-    period: "Feb 2020 – Aug 2022",
-    role: "Junior Software Engineer",
-    points: [
-      "Contributed to feature development from early concepts through production deployment.",
-      "Championed responsive design and accessibility standards across the product.",
-    ],
+    place: "Taiwan",
+    company: "DUCTECH",
+    period: "2017.10 – 2019.07",
+    role: "Product Designer",
+    description: "Built integrated Apple HomeKit based smart home services by bridging digital and physical environments. Set the core design direction and built the brand from the start. Worked on mobile apps, websites, and visual designs for marketing and exhibitions for shaping a seamless smart living experience.",
+  },
+  {
+    place: "Taiwan",
+    company: "Compal Electronics",
+    period: "2014.07 – 2017.07",
+    role: "Senior Interaction Designer",
+    description: "Worked in the Experience Industrial Design team to explore new ways of using products. Led interaction design for hardware prototypes and created user scenarios and personas for exploring various possibilities of innovative products.",
   },
 ]
 
 export function HomePage() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const section = new URLSearchParams(location.search).get("section")
+    if (!section) return
+    requestAnimationFrame(() => document.getElementById(section)?.scrollIntoView())
+  }, [location.search])
+
   return <main>
     <nav className="top-nav" aria-label="Page sections">
-      <a href="#intro">Intro</a>
-      <a href="#about">About</a>
-      <a href="#work">Work</a>
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
+      <a href="#/?section=intro">Intro</a>
+      <a href="#/?section=about">About</a>
+      <a href="#/?section=work">Work</a>
+      <a href="#/?section=experience">Experience</a>
+      <a href="#/?section=education">Education</a>
     </nav>
 
     <div className="shell">
@@ -122,7 +127,7 @@ export function HomePage() {
         <div className="project-grid">
           {projects.map((project) => <a className="project-card" href={project.href} key={project.title}>
             <div className="project-image"><img src={asset(project.image)} alt="" /></div>
-            <div className="project-caption"><span><strong>{project.title}</strong><small>{project.type}</small></span><Arrow diagonal /></div>
+            <div className="project-caption"><span><strong>{project.title}</strong><small>{project.year}</small></span><Arrow diagonal /></div>
           </a>)}
         </div>
       </section>
@@ -132,7 +137,7 @@ export function HomePage() {
         <div className="timeline">
           {experience.map((item) => <article className="timeline-item" key={item.company}>
             <div className="timeline-meta"><span>{item.place}</span><strong>{item.company}</strong><span>{item.period}</span></div>
-            <div className="timeline-content"><h3>{item.role}</h3><ul>{item.points.map((point) => <li key={point}>{point}</li>)}</ul></div>
+            <div className="timeline-content"><h3>{item.role}</h3><p>{item.description}</p></div>
           </article>)}
         </div>
       </section>
@@ -140,8 +145,8 @@ export function HomePage() {
       <section className="page-section" id="education">
         <SectionTitle>Education</SectionTitle>
         <div className="education-list">
-          <article><div><span>Stanford, CA</span><strong>2018 – 2020</strong></div><div><h3>Master of Science in Computer Science</h3><p>Astra University</p><small>Specialized in software engineering and scalable architectures for real-time web applications.</small></div></article>
-          <article><div><span>Providence, RI</span><strong>2015 – 2018</strong></div><div><h3>Bachelor of Science in Software Engineering</h3><p>Nova University</p><small>Graduated with honors. Coursework included algorithms, web development and interface design.</small></div></article>
+          <article><div><span>Taipei, Taiwan</span><strong>2011 – 2013</strong></div><div><h3>National Taipei University of Technology</h3><p>Master's degree, Graduate Institute of Interactive Media Design</p><small>GPA: 4.0</small></div></article>
+          <article><div><span>Yunlin, Taiwan</span><strong>2006 – 2010</strong></div><div><h3>National Yunlin University of Science and Technology</h3><p>Bachelor’s degree, Digital Media Design</p></div></article>
         </div>
       </section>
     </div>
