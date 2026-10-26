@@ -56,6 +56,26 @@ export function HomePage() {
     requestAnimationFrame(() => document.getElementById(section)?.scrollIntoView())
   }, [location.search])
 
+  useEffect(() => {
+    const groups = document.querySelectorAll<HTMLElement>("[data-stagger]")
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return
+        entry.target.classList.add("stagger-visible")
+        observer.unobserve(entry.target)
+      })
+    }, { threshold: 0.15, rootMargin: "0px 0px -8% 0px" })
+
+    groups.forEach((group) => {
+      const items = group.querySelectorAll<HTMLElement>(":scope > [data-stagger-item]")
+      items.forEach((item, index) => item.style.setProperty("--stagger-index", String(index)))
+      group.classList.add("stagger-ready")
+      observer.observe(group)
+    })
+
+    return () => observer.disconnect()
+  }, [])
+
   return <main>
     <nav className="top-nav" aria-label="Page sections">
       <a href="#/?section=intro">Intro</a>
@@ -86,8 +106,8 @@ export function HomePage() {
 
       <section className="page-section" id="work">
         <SectionTitle>Projects</SectionTitle>
-        <div className="project-grid">
-          {projects.map((project) => <a className="project-card" href={`#/work/${project.slug}`} key={project.slug}>
+        <div className="project-grid" data-stagger>
+          {projects.map((project) => <a className="project-card" data-stagger-item href={`#/work/${project.slug}`} key={project.slug}>
             <div className="project-image"><img src={asset(project.image)} alt="" /></div>
             <div className="project-caption"><span><strong>{project.title}</strong><small>{project.year}</small></span><Arrow diagonal /></div>
           </a>)}
@@ -97,9 +117,9 @@ export function HomePage() {
       <section className="page-section" id="experience">
         <SectionTitle>Experience</SectionTitle>
         <div className="timeline">
-          {experience.map((item) => <article className="timeline-item" key={item.company}>
-            <div className="timeline-meta"><span>{item.place}</span><strong>{item.company}</strong><span>{item.period}</span></div>
-            <div className="timeline-content"><h3>{item.role}</h3><p>{item.description}</p></div>
+          {experience.map((item) => <article className="timeline-item" data-stagger key={item.company}>
+            <div className="timeline-meta" data-stagger-item><span>{item.place}</span><strong>{item.company}</strong><span>{item.period}</span></div>
+            <div className="timeline-content" data-stagger-item><h3>{item.role}</h3><p>{item.description}</p></div>
           </article>)}
         </div>
       </section>
@@ -107,8 +127,8 @@ export function HomePage() {
       <section className="page-section" id="education">
         <SectionTitle>Education</SectionTitle>
         <div className="education-list">
-          <article><div><span>Taipei, Taiwan</span><strong>2011 – 2013</strong></div><div><h3>National Taipei University of Technology</h3><p>Master's degree, Graduate Institute of Interactive Media Design</p><small>GPA: 4.0</small></div></article>
-          <article><div><span>Yunlin, Taiwan</span><strong>2006 – 2010</strong></div><div><h3>National Yunlin University of Science and Technology</h3><p>Bachelor’s degree, Digital Media Design</p></div></article>
+          <article data-stagger><div data-stagger-item><span>Taipei, Taiwan</span><strong>2011 – 2013</strong></div><div data-stagger-item><h3>National Taipei University of Technology</h3><p>Master's degree, Graduate Institute of Interactive Media Design</p><small>GPA: 4.0</small></div></article>
+          <article data-stagger><div data-stagger-item><span>Yunlin, Taiwan</span><strong>2006 – 2010</strong></div><div data-stagger-item><h3>National Yunlin University of Science and Technology</h3><p>Bachelor’s degree, Digital Media Design</p></div></article>
         </div>
       </section>
     </div>

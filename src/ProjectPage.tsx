@@ -20,7 +20,7 @@ export default function ProjectPage() {
 
   if (!project) return <Navigate to="/" replace />
 
-  const moreProjects = projects.filter((item) => item.slug !== project.slug).slice(0, 4)
+  const moreProjects = projects.filter((item) => item.slug !== project.slug).slice(0, 2)
 
   return <main className="project-page">
     <nav className="top-nav project-nav" aria-label="Page navigation">
@@ -59,7 +59,7 @@ export default function ProjectPage() {
       </div>
 
       <section className="more-projects">
-        <div className="more-projects-title"><h2>View more projects</h2><a href="#/">View all</a></div>
+        <div className="more-projects-title"><h2>More projects</h2></div>
         <div className="more-project-grid">
           {moreProjects.map((item) => <a href={`#/work/${item.slug}`} className="more-project-card" key={item.slug}>
             <img src={asset(item.image)} alt="" />
