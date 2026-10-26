@@ -4,7 +4,8 @@ import ProjectPage from "../ProjectPage"
 
 export const router = createHashRouter([
   { path: "/", Component: HomePage },
-  { path: "/work/brandify", Component: ProjectPage },
+  { path: "/work/brandify", loader: () => redirect("/work/appflowy-official-website") },
+  { path: "/work/:slug", Component: ProjectPage },
   { path: "/intro", loader: () => redirect("/?section=intro") },
   { path: "/about", loader: () => redirect("/?section=about") },
   { path: "/work", loader: () => redirect("/?section=work") },

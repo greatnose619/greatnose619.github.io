@@ -64,6 +64,47 @@ main { overflow: clip; }
 .education-list small { display: block; margin-top: 15px; color: #ababab; font-size: 13px; line-height: 1.45; }
 #education { padding-bottom: 120px; }
 
+@keyframes section-reveal {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes card-reveal {
+  from { opacity: 0; transform: translateY(20px) scale(.97); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes timeline-reveal {
+  from { opacity: 0; transform: translateX(18px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@supports (animation-timeline: view()) {
+  .page-section > .section-title,
+  .about > .body-copy {
+    animation: section-reveal linear both;
+    animation-timeline: view(block);
+    animation-range: entry 5% cover 30%;
+  }
+
+  .project-card {
+    animation: card-reveal linear both;
+    animation-timeline: view(block);
+    animation-range: entry 2% cover 30%;
+  }
+
+  .project-card:nth-child(even) {
+    animation-range: entry 8% cover 34%;
+  }
+
+  .timeline-item,
+  .education-list article {
+    animation: timeline-reveal linear both;
+    animation-timeline: view(block);
+    animation-range: entry 5% cover 28%;
+  }
+}
+
 @media (max-width: 720px) {
   .top-nav { justify-content: flex-start; overflow-x: auto; max-width: calc(100% - 24px); scrollbar-width: none; }
   .top-nav::-webkit-scrollbar { display: none; }
@@ -85,7 +126,7 @@ main { overflow: clip; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { scroll-behavior: auto !important; transition: none !important; }
+  * { scroll-behavior: auto !important; transition: none !important; animation: none !important; }
 }
 
 .project-page { min-height: 100vh; background: #121212; }

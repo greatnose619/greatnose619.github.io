@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from "react"
 import { useLocation } from "react-router"
+import { projects } from "./data/projects"
 
 const asset = (name: string) => `${import.meta.env.BASE_URL}assets/${name}`
 
@@ -14,45 +15,6 @@ function LocationPin() {
 function SectionTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
   return <div className="section-title"><h2>{children}</h2>{action}</div>
 }
-
-const projects = [
-  {
-    title: "AppFlowy Official Website",
-    year: "2026",
-    image: "project-1.png",
-    href: "#/work/brandify",
-  },
-  {
-    title: "AppFlowy Design Guideline",
-    year: "2025",
-    image: "project-2.png",
-    href: "#",
-  },
-  {
-    title: "AppFlowy.IO",
-    year: "2025",
-    image: "project-3.png",
-    href: "#",
-  },
-  {
-    title: "Synology Account 6.0",
-    year: "2023",
-    image: "project-1.png",
-    href: "#",
-  },
-  {
-    title: "Synology WorkPlus",
-    year: "2020",
-    image: "project-2.png",
-    href: "#",
-  },
-  {
-    title: "DUCTECH Brand Identity",
-    year: "2018",
-    image: "project-3.png",
-    href: "#",
-  },
-]
 
 const experience = [
   {
@@ -98,7 +60,7 @@ export function HomePage() {
     <nav className="top-nav" aria-label="Page sections">
       <a href="#/?section=intro">Intro</a>
       <a href="#/?section=about">About</a>
-      <a href="#/?section=work">Work</a>
+      <a href="#/?section=work">Projects</a>
       <a href="#/?section=experience">Experience</a>
       <a href="#/?section=education">Education</a>
     </nav>
@@ -125,7 +87,7 @@ export function HomePage() {
       <section className="page-section" id="work">
         <SectionTitle>Projects</SectionTitle>
         <div className="project-grid">
-          {projects.map((project) => <a className="project-card" href={project.href} key={project.title}>
+          {projects.map((project) => <a className="project-card" href={`#/work/${project.slug}`} key={project.slug}>
             <div className="project-image"><img src={asset(project.image)} alt="" /></div>
             <div className="project-caption"><span><strong>{project.title}</strong><small>{project.year}</small></span><Arrow diagonal /></div>
           </a>)}
